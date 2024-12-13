@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Escaneos de Red</h1>
+<!-- Encabezado para mostrar el objetivo seleccionado -->
+<div id="target-header">
+    Target: <span id="selected-target">Ninguno</span>
+</div>
+
+<div class="columns-container">
+    <!-- Primera columna: Escaneo ARP -->
+    <div class="column">
+        <h2>Escaneo ARP</h2>
+        <button id="scan-btn">Escanear</button>
+        <label for="ip-select">Selecciona una IP:</label>
+        <select id="ip-select" style="width: 100%;">
+            <option value="">--Seleccione una IP--</option>
+        </select>
+        <button class="save-btn" data-target="arp-results">Guardar Datos</button>
+        <pre id="arp-results"></pre>
+    </div>
+
+     <!-- Segunda columna: Escaneo Nmap con un modal -->
+    <div class="column" data-modal="nmap-modal">
+        <h2>Escaneo Nmap</h2>
+        <img src="static/img/nmap.png" alt="Nmap">
+    </div>
+
+    <!-- Tercera columna: Fuzzing con un modal -->
+    <div class="column" data-modal="fuzz-modal">
+        <h2>Fuzzing</h2>
+        <img src="static/img/fuzz.png" alt="Fuzzing">
+    </div>
+</div>
+
+<!-- Modal para Escaneo Nmap -->
+<div id="nmap-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Escaneo Nmap</h3>
+        <button id="nmap-btn" disabled>Escanear con Nmap</button>
+        <button class="save-btn" data-target="nmap-results">Guardar Datos</button>
+        <pre id="nmap-results"></pre>
+    </div>
+</div>
+
+<!-- Modal para Fuzzing -->
+<div id="fuzz-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Fuzzing</h3>
+        <!-- Input para la URL -->
+        <label for="fuzz-url">URL:</label>
+        <input type="text" id="fuzz-url" placeholder="http://127.0.0.1/" style="width: 100%;">
+         <!-- Opciones de extensión -->
+        <div>
+            <label><input type="checkbox" id="html" value="html"> HTML</label>
+            <label><input type="checkbox" id="txt" value="txt"> TXT</label>
+            <label><input type="checkbox" id="php" value="php"> PHP</label>
+        </div>
+         <!-- Input para subir diccionario -->
+        <label for="dictionary">Diccionario:</label>
+        <input type="file" id="dictionary" accept=".txt">
+        <button id="fuzz-btn" disabled>Fuzzing</button>
+        <button class="save-btn" data-target="fuzz-results">Guardar Datos</button>
+         <!-- Área para mostrar resultados del fuzzing -->
+        <pre id="fuzz-results"></pre>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='scans.js') }}"></script>
+<script src="{{ url_for('static', filename='modal.js') }}"></script>
+{% endblock %}
+

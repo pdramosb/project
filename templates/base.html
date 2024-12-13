@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    
+    <title>Auditoría de Ciberseguridad</title>
+</head>
+<body>
+    <!-- Barra de navegación principal -->
+    <nav>
+        <ul>
+             <!-- Enlaces principales de la aplicación -->
+            <li><a href="/" id="home-link">Inicio</a></li>
+            <li><a href="/scans" id="scans-link">Escaneos</a></li>
+            <li><a href="/attacks" id="attacks-link">Ataques</a></li>
+            <li><a href="/docs" id="docs-link">Documentación</a></li>
+            <li><a href="/sniff" id="sniff-link">Captura</a></li>
+        </ul>
+         <!-- Sección de información del usuario -->
+        <div class="user-info">
+            {% if session.user %}
+                <!-- Muestra el nombre de usuario y correo si hay una sesión activa -->
+                <span>Bienvenido, {{ session.user }} ({{ session.mail }})</span>
+                <a href="/logout" class="logout-button">Cerrar sesión</a>
+            {% else %}
+                <!-- Enlace a iniciar sesión si no hay una sesión activa -->
+                <a href="/login" class="login-button">Iniciar sesión</a>
+            {% endif %}
+        </div>
+    </nav>
+    <!-- Contenido principal de la página -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+     <!-- Pie de página -->
+    <footer>
+        <p>Pablo Daniel Ramos Bueno, Proyecto Desarrollo de Aplicaciones WEB</p>
+    </footer>
+    <script>
+        // Leer el valor del parámetro 'target' de la URL actual
+        const params = new URLSearchParams(window.location.search);
+        const target = params.get('target');
+
+        // Si existe el parámetro 'target', actualizar los enlaces para incluirlo
+        if (target) {
+            document.getElementById('scans-link').href = `/scans?target=${encodeURIComponent(target)}`;
+            document.getElementById('attacks-link').href = `/attacks?target=${encodeURIComponent(target)}`;
+            document.getElementById('docs-link').href = `/docs?target=${encodeURIComponent(target)}`;
+            document.getElementById('sniff-link').href = `/sniff?target=${encodeURIComponent(target)}`;
+        }
+    </script>
+    <!-- Script adicional para guardar acciones (si es necesario) -->
+    <script src="{{ url_for('static', filename='save.js') }}"></script>
+</body>
+</html>
+

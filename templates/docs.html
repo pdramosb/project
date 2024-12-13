@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Documentación</h1>
+
+<div class="docs-container">
+    <!-- Botón para descargar resultados.txt -->
+    <button id="download-btn">Descargar resultados.txt</button>
+
+    <!-- Campo de texto para el correo -->
+    <label for="email-input">Enviar archivo por correo:</label>
+    <input 
+        type="email" 
+        id="email-input" 
+        value="{{ email }}" 
+        placeholder="Escribe un correo"
+    />
+    
+    <!-- Botón para enviar por correo -->
+    <button id="email-btn">Enviar por correo</button>
+</div>
+<script src="{{ url_for('static', filename='docs.js') }}"></script>
+
+{% endblock %}
+

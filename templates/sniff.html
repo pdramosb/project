@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Captura de Paquetes</h1>
+
+<div>
+    <!-- Botón para iniciar la captura -->
+    <button id="start-sniff-btn">Iniciar Captura</button>
+
+    <!-- Botón para detener la captura -->
+    <button id="stop-sniff-btn" disabled>Detener Captura</button>
+</div>
+
+<div>
+    <!-- Checkbox para habilitar el filtrado por IP -->
+    <label>
+        <input type="checkbox" id="filter-checkbox">
+        Filtrar por IP
+    </label>
+
+    <!-- Input para ingresar la IP si se filtra -->
+    <input type="text" id="filter-ip-input" placeholder="Introduce una IP" disabled>
+</div>
+
+<!-- Área para mostrar los paquetes capturados -->
+<h3>Resultados:</h3>
+<button class="save-btn" data-target="capture-results">Guardar Datos</button>
+<pre id="capture-results"></pre>
+
+<script src="{{ url_for('static', filename='sniff.js') }}"></script>
+{% endblock %}

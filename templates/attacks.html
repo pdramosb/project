@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Página de ataques. Aquí se define la estructura principal de la interfaz, con una cabecera, columnas interactivas y modales. -->
+
+<h1>Ataques</h1>
+<div id="target-header">
+    <!-- Muestra el objetivo seleccionado dinámicamente -->
+    Target: <span id="selected-target">Ninguno</span>
+</div>
+
+<div class="columns-container">
+    <!-- Columna 1: Ataque Fuerza Bruta -->
+    <!-- Cada columna está vinculada a un modal mediante el atributo `data-modal`. -->
+    <div class="column" data-modal="brute-modal">
+        <h2>Fuerza Bruta</h2>
+        <img src="static/img/brute.png" alt="Fuerza Bruta">
+    </div>
+
+    <!-- Columna 2: SQL Injection -->
+    <!-- Configura un ataque SQLMap, usando inputs del usuario. -->
+    <div class="column" data-modal="sqli-modal">
+        <h2>SQL Injection</h2>
+        <img src="static/img/sqli.png" alt="SQL Injection">
+    </div>
+
+    <!-- Columna 3: Hydra -->
+    <!-- Configura un ataque de fuerza bruta utilizando Hydra. -->
+    <div class="column" data-modal="hydra-modal">
+        <h2>Hydra</h2>
+        <img src="static/img/hydra.png" alt="Hydra">
+    </div>
+</div>
+
+<!-- Modales -->
+<!-- Los modales contienen formularios que reciben parámetros para los diferentes tipos de ataques. -->
+<!-- Cada modal se asocia con un botón para iniciar el ataque y un área de resultados. -->
+<div class="modal" id="brute-modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Fuerza Bruta en Formularios Web</h3>
+        <label for="web-login-path">Ruta del formulario (e.g., /login.php):</label>
+        <input type="text" id="web-login-path" placeholder="/login.php"><br>
+
+        <label for="brute-user">Usuario:</label>
+        <input type="text" id="brute-user" placeholder="admin" value="admin"><br>
+
+        <label for="web-user-field">Atributo del formulario (Usuario):</label>
+        <input type="text" id="web-user-field" placeholder="username" value="username"><br>
+
+        <label for="web-pass-field">Atributo del formulario (Contraseña):</label>
+        <input type="text" id="web-pass-field" placeholder="password" value="password"><br>
+
+        <label for="web-error-message">Mensaje de error:</label>
+        <input type="text" id="web-error-message" placeholder="Invalid credentials" value="Invalid credentials"><br>
+
+        <button id="brute-btn">Iniciar Fuerza Bruta</button>
+        <button class="save-btn" data-target="brute-results">Guardar Datos</button><br>
+        <pre id="brute-results"></pre>
+    </div>
+</div>
+
+<div class="modal" id="sqli-modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>SQL Injection</h3>
+        <label for="sqlmap-url">URL completa del formulario:</label>
+        <input type="text" id="sqlmap-url" placeholder="http://192.168.136.130/sqli.php"><br>
+
+        <label for="sqlmap-atributo">Atributo del formulario (name del input):</label>
+        <input type="text" id="sqlmap-atributo" placeholder="nombre"><br>
+
+        <button id="sqlmap-btn">Iniciar SQLMap</button><br>
+
+        <label for="databases-select">Bases de datos encontradas:</label><br>
+        <select id="databases-select" style="display: none;">
+            <option value="">Seleccione una base de datos</option>
+        </select><br>
+        <button class="save-btn" data-target="sqlmap-results">Guardar Datos</button>
+        <pre id="sqlmap-results"></pre>
+    </div>
+</div>
+
+<div class="modal" id="hydra-modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Hydra (Ataque de Fuerza Bruta)</h3>
+        <label for="hydra-username">Nombre de usuario:</label>
+        <input type="text" id="hydra-username" placeholder="admin" value="admin">
+
+        <fieldset>
+            <legend>Tipo de escaneo:</legend>
+            <label><input type="radio" name="hydra-scan-type" value="ftp" checked> FTP</label>
+            <label><input type="radio" name="hydra-scan-type" value="smb"> SMB</label>
+            <label><input type="radio" name="hydra-scan-type" value="smtps"> SMTPS</label>
+            <label><input type="radio" name="hydra-scan-type" value="ssh"> SSH</label>
+            <label><input type="radio" name="hydra-scan-type" value="mysql"> MySQL</label>
+        </fieldset>
+
+        <button id="hydra-btn">Iniciar Ataque Hydra</button><br>
+        <button class="save-btn" data-target="hydra-results">Guardar Datos</button><br>
+        <pre id="hydra-results"></pre>
+    </div>
+</div>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<script src="{{ url_for('static', filename='attacks.js') }}"></script>
+<script src="{{ url_for('static', filename='modal.js') }}"></script>
+{% endblock %}
+
